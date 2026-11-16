@@ -1,7 +1,4 @@
-
-# y-aetherun(莞工专用）
-DGUT校园跑轨迹与步频引擎(雷电模拟器) · Avalonia / .NET 8
-# Y·Aetherun(DGUT)
+# Y·Aetherun
 
 **雷电模拟器 · 校园跑轨迹与步频引擎**
 
@@ -28,6 +25,8 @@ DGUT校园跑轨迹与步频引擎(雷电模拟器) · Avalonia / .NET 8
 - 目标 App 的 `minSdkVersion = 26`，所以 Android 7 以下的实例装不上
 
 工具启动时会自己扫 `C/D/E/F:\{leidian,LDPlayer,Program Files\LDPlayer,...}\{LDPlayer14,LDPlayer12,LDPlayer9}\ldconsole.exe`，扫不到就在「设置」页手填。
+
+自己编译、跑自检、重新烘奶蛙网格的步骤见 [docs/BUILD.md](docs/BUILD.md)。
 
 ## 快速开始
 
@@ -66,6 +65,28 @@ DGUT校园跑轨迹与步频引擎(雷电模拟器) · Avalonia / .NET 8
 - **关于**：项目声明、开发者签名、用法与技术栈。
 
 顶栏的「▶ 开屏动画」随时可以重播启动动画。
+
+### 截图
+
+| 仪表盘 | 跑步中 |
+| --- | --- |
+| ![仪表盘](docs/screenshots/01-dashboard.png) | ![跑步中](docs/screenshots/02-running.png) |
+
+| 跑道（奶蛙建模） | 设置 |
+| --- | --- |
+| ![跑道](docs/screenshots/03-track.png) | ![设置](docs/screenshots/04-settings.png) |
+
+| 倒计时横幅 | 开屏动画 |
+| --- | --- |
+| ![倒计时](docs/screenshots/05-countdown.png) | ![开屏](docs/screenshots/06-splash.png) |
+
+| 关于（声明与技术栈） |
+| --- |
+| ![关于](docs/screenshots/07-about.png) |
+
+奶蛙四个朝向的裸光栅（不含背景与阴影，可以逐像素看有没有空隙）：
+
+![奶蛙实心核对](docs/screenshots/08-frog-solid.png)
 
 ## 配置保存在哪
 
@@ -192,7 +213,7 @@ DGUT校园跑轨迹与步频引擎(雷电模拟器) · Avalonia / .NET 8
 - 定位：`ldconsole locate --LLI`（GPS HAL，无 mock 标记）
 - 步频：`ldconsole action call.gravity`（z 轴加速度）
 - 3D 操场：纯 2D 绘制指令的透视投影，无 GPU 依赖
-- 奶蛙：glb 离线导出 `NWM1` 网格，运行时软件光栅（画家算法 + 平面光照），无 GPU 依赖
+- 奶蛙：glb 离线导出 `NWM1` 网格（最高 50855 顶点 / 103790 三角），运行时逐像素 z-buffer 软光栅 + 平面光照，实心不透，无 GPU 依赖
 
 ## 许可
 
