@@ -1,0 +1,55 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Aetherun.Desktop.ViewModels"
+             x:Class="Aetherun.Desktop.Views.LogsView"
+             x:DataType="vm:MainViewModel">
+  <Grid RowDefinitions="Auto,*">
+
+    <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="2,0,2,14">
+      <Border Grid.Column="0" Classes="mark" Margin="0,0,10,0"
+              Background="{StaticResource TextFaintBrush}" />
+      <StackPanel Grid.Column="1" Spacing="1">
+        <TextBlock Classes="title" Text="运行日志" />
+        <TextBlock Classes="eyebrow" Text="RUNTIME LOG · 最多 500 行" />
+      </StackPanel>
+      <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+        <Border Classes="pill" Padding="11,4">
+          <TextBlock Classes="mono" FontSize="10" Text="{Binding LogCount}"
+                     Foreground="{StaticResource AccentBrush}" />
+        </Border>
+        <Button Classes="ghost" FontSize="11" Padding="12,6" Content="复制"
+                Command="{Binding CopyLogCommand}" ToolTip.Tip="把全部日志复制到剪贴板" />
+        <Button Classes="ghost" FontSize="11" Padding="12,6" Content="清空"
+                Command="{Binding ClearLogCommand}" ToolTip.Tip="清空当前日志" />
+      </StackPanel>
+    </Grid>
+
+    <Border Grid.Row="1" Classes="card" Padding="0">
+      <Grid RowDefinitions="Auto,*">
+
+        <!-- 终端头 -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,Auto,*" Margin="18,12,18,10">
+          <Ellipse Grid.Column="0" Width="8" Height="8" Fill="#3A4553" VerticalAlignment="Center" />
+          <Ellipse Grid.Column="1" Width="8" Height="8" Fill="#3A4553" VerticalAlignment="Center" Margin="6,0,0,0" />
+          <Ellipse Grid.Column="2" Width="8" Height="8" Fill="#3A4553" VerticalAlignment="Center" Margin="6,0,0,0" />
+          <TextBlock Grid.Column="3" Classes="eyebrow" Text="AETHERUN · ENGINE STREAM"
+                     HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
+        <Border Grid.Row="0" Height="1" VerticalAlignment="Bottom"
+                Background="{StaticResource LineSoftBrush}" />
+
+        <ScrollViewer Grid.Row="1" Margin="0,0,0,10" x:Name="LogScroll">
+          <ItemsControl ItemsSource="{Binding LogLines}" Margin="18,8">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding}" Classes="mono" FontSize="11" LineHeight="17"
+                           Foreground="{StaticResource TextDimBrush}" TextWrapping="Wrap"
+                           Margin="0,0,0,1" />
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </ScrollViewer>
+      </Grid>
+    </Border>
+  </Grid>
+</UserControl>

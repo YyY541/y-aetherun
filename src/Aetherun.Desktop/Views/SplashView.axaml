@@ -1,0 +1,76 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Aetherun.Desktop.ViewModels"
+             xmlns:controls="using:Aetherun.Desktop.Controls"
+             x:Class="Aetherun.Desktop.Views.SplashView"
+             x:DataType="vm:MainViewModel">
+
+  <Grid RowDefinitions="Auto,*,Auto">
+
+    <!-- 页头 -->
+    <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="2,0,2,14">
+      <Border Grid.Column="0" Classes="mark" Margin="0,0,10,0" />
+      <StackPanel Grid.Column="1" Spacing="1">
+        <TextBlock Classes="title" Text="开屏动画" />
+        <TextBlock Classes="eyebrow" Text="INTRO SEQUENCE · 381 FRAMES @ 24FPS" />
+      </StackPanel>
+
+      <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+        <Button x:Name="ReplayBtn" Classes="primary" Height="34" Padding="18,0" FontSize="11"
+                Click="OnReplay">
+          <StackPanel Orientation="Horizontal" Spacing="7">
+            <TextBlock Text="↻" FontSize="12" VerticalAlignment="Center" />
+            <TextBlock Text="重新播放" FontSize="11" VerticalAlignment="Center" />
+          </StackPanel>
+        </Button>
+        <Button x:Name="PauseBtn" Classes="ghost" Height="34" Padding="16,0" FontSize="11"
+                Content="暂停" Click="OnPause" />
+        <Border Classes="pill" Padding="12,0" Height="34" VerticalAlignment="Center">
+          <CheckBox x:Name="LoopBox" Content="循环" FontSize="11" VerticalAlignment="Center"
+                    Padding="0" MinHeight="0" />
+        </Border>
+      </StackPanel>
+    </Grid>
+
+    <!-- 播放区 -->
+    <Border Grid.Row="1" Classes="card" Padding="0" ClipToBounds="True">
+      <Grid>
+        <controls:SplashPlayer x:Name="Player" Loop="False" Cinematic="True" />
+
+        <!-- 画面角标 -->
+        <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="18"
+                Classes="pill" Padding="11,5" Background="#B0080B10">
+          <StackPanel Orientation="Horizontal" Spacing="7">
+            <Ellipse Width="6" Height="6" VerticalAlignment="Center"
+                     Fill="{StaticResource AccentBrush}" x:Name="PlayDot" />
+            <TextBlock Classes="mono" FontSize="9" x:Name="StateLabel" Text="PLAYING"
+                       Foreground="{StaticResource TextDimBrush}" />
+          </StackPanel>
+        </Border>
+
+        <Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="18"
+                Classes="pill" Padding="11,5" Background="#B0080B10">
+          <TextBlock Classes="mono" FontSize="9" x:Name="TimeLabel" Text="00.0 / 15.9 s"
+                     Foreground="{StaticResource TextDimBrush}" />
+        </Border>
+      </Grid>
+    </Border>
+
+    <!-- 进度条 -->
+    <Border Grid.Row="2" Classes="card" Margin="0,14,0,0" Padding="18,12">
+      <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+        <Border Grid.Column="0" Classes="pill" Padding="10,4" VerticalAlignment="Center">
+          <TextBlock Classes="mono" FontSize="10" x:Name="FrameLabel" Text="001 / 381"
+                     Foreground="{StaticResource AccentBrush}" />
+        </Border>
+
+        <Slider Grid.Column="1" x:Name="Seek" Minimum="0" Maximum="380"
+                Value="0" IsSnapToTickEnabled="True" TickFrequency="1"
+                ValueChanged="OnSeek" VerticalAlignment="Center" />
+
+        <TextBlock Grid.Column="2" Classes="faint" FontSize="10" VerticalAlignment="Center"
+                   Text="拖动即暂停定位到该帧" />
+      </Grid>
+    </Border>
+  </Grid>
+</UserControl>

@@ -1,0 +1,308 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Aetherun.Desktop.ViewModels"
+             xmlns:controls="using:Aetherun.Desktop.Controls"
+             x:Class="Aetherun.Desktop.Views.DashboardView"
+             x:DataType="vm:MainViewModel">
+  <Grid ColumnDefinitions="352,*">
+
+    <!-- ================= 左：环形 + 指标 ================= -->
+    <Border Grid.Column="0" Classes="card">
+      <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
+
+        <!-- 页头 -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="20,16,20,0">
+          <Border Grid.Column="0" Classes="mark" Margin="0,0,9,0" />
+          <StackPanel Grid.Column="1" Spacing="1">
+            <TextBlock Classes="sectionhead" Text="本次跑步" />
+            <TextBlock Classes="eyebrow" Text="LIVE SESSION" />
+          </StackPanel>
+          <Border Grid.Column="2" Classes="pill" Padding="9,3" VerticalAlignment="Center">
+            <TextBlock x:Name="PhaseBadge" Classes="mono" FontSize="9"
+                       Text="{Binding Snapshot.PhaseText}"
+                       Foreground="{Binding PhaseBrush}" />
+          </Border>
+        </Grid>
+
+        <!-- 环形 -->
+        <Grid Grid.Row="1" Height="212" Margin="0,10,0,0">
+          <controls:ProgressRing Width="200" Height="200" HorizontalAlignment="Center"
+                                 VerticalAlignment="Top" Margin="0,4,0,0"
+                                 Progress="{Binding Snapshot.Progress}"
+                                 Thickness="11"
+                                 RingBrush="{StaticResource AccentBrush}"
+                                 TrackBrush="#151C25" />
+
+          <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="0" Margin="0,10,0,0">
+            <TextBlock Text="{Binding DistanceText}" Classes="mono"
+                       FontSize="46" FontWeight="Bold" HorizontalAlignment="Center"
+                       Foreground="{StaticResource NumberBackdrop}" />
+            <TextBlock Text="KM" Classes="eyebrow" HorizontalAlignment="Center" Margin="0,1,0,0" />
+            <Border Classes="pill" Padding="10,3" Margin="0,9,0,0" HorizontalAlignment="Center">
+              <TextBlock Classes="mono" FontSize="10" Foreground="{StaticResource TextDimBrush}">
+                <Run Text="目标 " /><Run Text="{Binding TargetText}" /><Run Text=" km" />
+              </TextBlock>
+            </Border>
+          </StackPanel>
+        </Grid>
+
+        <!-- 三个指标 -->
+        <Grid Grid.Row="2" ColumnDefinitions="*,*,*" Margin="16,4,16,0" Height="72">
+          <Border Grid.Column="0" Classes="tile" Margin="0,0,5,0">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="3">
+              <TextBlock Text="{Binding StepsText}" Classes="mono" FontSize="21" FontWeight="Bold" />
+              <TextBlock Text="步数" Classes="caption" />
+            </StackPanel>
+          </Border>
+          <Border Grid.Column="1" Classes="tile" Margin="5,0">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="3">
+              <TextBlock Text="{Binding TimeText}" Classes="mono" FontSize="21" FontWeight="Bold" />
+              <TextBlock Text="用时" Classes="caption" />
+            </StackPanel>
+          </Border>
+          <Border Grid.Column="2" Classes="tile" Margin="5,0,0,0">
+            <Grid>
+              <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="3">
+                <TextBlock Text="{Binding CadenceText}" Classes="mono" FontSize="21" FontWeight="Bold" />
+                <TextBlock Text="步频" Classes="caption" />
+              </StackPanel>
+              <!-- 顶到机器上限时挂个 LIMIT，否则用户只会觉得「又不对」 -->
+              <!-- 顶到注入通道上限时挂 LIMIT -->
+              <Border Classes="pill" Padding="7,2" VerticalAlignment="Top" HorizontalAlignment="Right"
+                      Margin="0,6,2,0" IsVisible="{Binding ShowCadenceHint}"
+                      Background="#1A1114" BorderBrush="{StaticResource DangerBrush}"
+                      ToolTip.Tip="{Binding CadenceHintText}">
+                <TextBlock Classes="mono" FontSize="8" Text="LIMIT"
+                           Foreground="{StaticResource DangerBrush}" />
+              </Border>
+              <!-- 闭环校正的实时读数：目标 / App 实测 / 发送率倍数 -->
+              <TextBlock Classes="mono" FontSize="7.5" VerticalAlignment="Bottom"
+                         HorizontalAlignment="Right" Margin="0,0,3,1"
+                         IsVisible="{Binding ShowCadenceNote}"
+                         Text="{Binding CadenceNoteText}"
+                         Foreground="{StaticResource AccentWarmBrush}" />
+            </Grid>
+          </Border>
+        </Grid>
+
+        <!-- 配速 / 进度 -->
+        <Border Grid.Row="3" Classes="tile" Margin="16,10,16,0" VerticalAlignment="Top" Padding="14,10">
+          <Grid ColumnDefinitions="*,Auto,*">
+            <StackPanel Grid.Column="0" Spacing="2">
+              <TextBlock Text="平均配速" Classes="caption" />
+              <TextBlock Text="{Binding PaceText}" Classes="mono" FontSize="16" FontWeight="Bold"
+                         Foreground="{StaticResource AccentAltBrush}" />
+            </StackPanel>
+
+            <Border Grid.Column="1" Width="1" Background="{StaticResource LineSoftBrush}" Margin="16,2" />
+
+            <StackPanel Grid.Column="2" Spacing="2" HorizontalAlignment="Right">
+              <TextBlock Text="完成度" Classes="caption" HorizontalAlignment="Right" />
+              <TextBlock Text="{Binding ProgressText}" Classes="mono" FontSize="16" FontWeight="Bold"
+                         HorizontalAlignment="Right" />
+            </StackPanel>
+          </Grid>
+        </Border>
+
+        <!-- 底部小操场 -->
+        <Border Grid.Row="4" Margin="16,10,16,14" Height="150" ClipToBounds="True"
+                CornerRadius="12" Background="#0B1016" BorderBrush="{StaticResource LineSoftBrush}"
+                BorderThickness="1">
+          <controls:TrackScene3D Compact="True"
+                                 Track="{Binding Track}"
+                                 DistanceMeters="{Binding Snapshot.DistanceMeters}"
+                                 TargetMeters="{Binding Snapshot.TargetMeters}"
+                                 Running="{Binding IsRunning}"
+                                 Cadence="{Binding Snapshot.Cadence}"
+                                 CheckpointCount="5" />
+        </Border>
+      </Grid>
+    </Border>
+
+    <!-- ================= 右：倒计时 / 参数 / 状态 / 日志 ================= -->
+    <Grid Grid.Column="1" Margin="16,0,0,0" RowDefinitions="Auto,Auto,Auto,*">
+
+      <StackPanel Grid.Row="0" Spacing="0">
+
+      <!-- 倒计时横幅：平时收起来，进入 Armed 才出现 -->
+      <Border Classes="card" Margin="0,0,0,12" Padding="18,14"
+              IsVisible="{Binding IsArmed}"
+              BorderBrush="{Binding ForegroundBrush}" BorderThickness="1">
+        <Grid ColumnDefinitions="Auto,*,Auto">
+          <Border Grid.Column="0" Width="52" Height="52" CornerRadius="14"
+                  Background="#0D1A14" BorderBrush="{Binding ForegroundBrush}"
+                  BorderThickness="1" Margin="0,0,16,0">
+            <TextBlock Text="{Binding CountdownText}" Classes="mono" FontSize="24"
+                       FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Foreground="{Binding ForegroundBrush}" />
+          </Border>
+
+          <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="6">
+            <TextBlock Classes="sectionhead" Text="{Binding CountdownHeadline}"
+                       Foreground="{Binding ForegroundBrush}" />
+            <TextBlock Classes="dim" FontSize="11" TextWrapping="Wrap"
+                       Text="{Binding ForegroundHint}" />
+            <Button Classes="chip" Content="打开运动世界" FontSize="10" Padding="12,4"
+                    HorizontalAlignment="Left" Command="{Binding LaunchAppCommand}" />
+            <ProgressBar Height="3" Minimum="0" Maximum="1" Value="{Binding CountdownProgress}"
+                         Foreground="{Binding ForegroundBrush}" Background="#141C26" />
+          </StackPanel>
+
+          <TextBlock Grid.Column="2" Classes="eyebrow" Text="COUNTDOWN"
+                     VerticalAlignment="Top" Margin="12,2,0,0" />
+        </Grid>
+      </Border>
+
+      <!-- 漏检警告：倒计时走完但 App 从没到前台，服务端大概率不计成绩 -->
+      <Border Classes="card" Margin="0,0,0,12" Padding="16,12"
+              IsVisible="{Binding ShowMissedWarning}"
+              BorderBrush="{StaticResource DangerBrush}" BorderThickness="1"
+              Background="#1A1114">
+        <Grid ColumnDefinitions="Auto,*">
+          <Border Grid.Column="0" Width="26" Height="26" CornerRadius="8"
+                  Background="{StaticResource DangerBrush}" Margin="0,0,12,0"
+                  VerticalAlignment="Top">
+            <TextBlock Text="!" FontSize="14" FontWeight="Bold" Foreground="#1A1114"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+          </Border>
+          <StackPanel Grid.Column="1" Spacing="3">
+            <TextBlock Classes="sectionhead" Text="这次可能不计成绩"
+                       Foreground="{StaticResource DangerBrush}" />
+            <TextBlock Classes="dim" FontSize="11" TextWrapping="Wrap"
+                       Text="{Binding MissedWarningText}" />
+          </StackPanel>
+        </Grid>
+      </Border>
+
+      </StackPanel>
+
+      <!-- 本次参数 -->
+      <Border Grid.Row="1" Classes="card" Padding="18,14">
+        <Grid RowDefinitions="Auto,Auto,Auto">
+          <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+            <Border Grid.Column="0" Classes="mark" Margin="0,0,9,0" />
+            <StackPanel Grid.Column="1" Spacing="1">
+              <TextBlock Classes="sectionhead" Text="本次参数" />
+              <TextBlock Classes="eyebrow" Text="在仪表盘直接调，不用进设置" />
+            </StackPanel>
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+              <Button Classes="chip" Content="慢走" Tag="slow" Click="OnPreset" />
+              <Button Classes="chip" Content="标准" Tag="standard" Click="OnPreset" />
+              <Button Classes="chip" Content="快走" Tag="fast" Click="OnPreset" />
+            </StackPanel>
+          </Grid>
+
+          <Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="0,12,0,0" Height="88">
+            <StackPanel Grid.Column="0" Margin="0,0,8,0" Spacing="4">
+              <TextBlock Classes="caption" Text="目标 · KM" />
+              <controls:ValueDial Height="58" Minimum="0.5" Maximum="2.0" Step="0.1"
+                                  Value="{Binding DashTargetKm, Mode=TwoWay}"
+                                  Format="F1" Unit="km" IsEnabled="{Binding !Busy}"
+                                  AccentBrush="{StaticResource AccentBrush}"
+                                  FadeBrush="#111720" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="4,0" Spacing="4">
+              <TextBlock Classes="caption" Text="配速 · 分/公里" />
+              <controls:ValueDial Height="58" Minimum="2" Maximum="10" Step="0.05"
+                                  Value="{Binding DashPace, Mode=TwoWay}"
+                                  Format="F2" Unit="′" IsEnabled="{Binding !Busy}"
+                                  AccentBrush="{StaticResource AccentAltBrush}"
+                                  FadeBrush="#111720" />
+            </StackPanel>
+            <StackPanel Grid.Column="2" Margin="8,0,0,0" Spacing="4">
+              <TextBlock Classes="caption" Text="步频 · 步/分" />
+              <controls:ValueDial Height="58" Minimum="60" Maximum="300" Step="5"
+                                  Value="{Binding DashCadence, Mode=TwoWay}"
+                                  Format="F0" Unit="spm" IsEnabled="{Binding !Busy}"
+                                  AccentBrush="{StaticResource AccentWarmBrush}"
+                                  FadeBrush="#111720" />
+            </StackPanel>
+          </Grid>
+
+          <!-- 参数换算结果：三个数调完之后实际会跑成什么样 -->
+          <Grid Grid.Row="2" ColumnDefinitions="*,Auto,*" Margin="0,10,0,0">
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="5">
+              <TextBlock Classes="caption" Text="预计用时" />
+              <TextBlock Classes="mono" FontSize="11" Text="{Binding EtaText}"
+                         Foreground="{StaticResource TextDimBrush}" />
+            </StackPanel>
+
+            <Border Grid.Column="1" Width="1" Background="{StaticResource LineSoftBrush}" Margin="10,0" />
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="5"
+                        HorizontalAlignment="Right">
+              <TextBlock Classes="caption" Text="预计步数" />
+              <TextBlock Classes="mono" FontSize="11" Text="{Binding EstStepsText}"
+                         Foreground="{StaticResource TextDimBrush}" />
+              <TextBlock Classes="mono" FontSize="11" Text="{Binding SpeedHintText}"
+                         Foreground="{StaticResource AccentAltBrush}" />
+            </StackPanel>
+          </Grid>
+        </Grid>
+      </Border>
+
+      <!-- 当前状态：改成分行的指标表 -->
+      <Border Grid.Row="2" Classes="card" Margin="0,12,0,0" Padding="18,14">
+        <Grid RowDefinitions="Auto,Auto,Auto">
+          <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+            <Border Grid.Column="0" Classes="mark" Margin="0,0,9,0"
+                    Background="{StaticResource AccentAltBrush}" />
+            <StackPanel Grid.Column="1" Spacing="1">
+              <TextBlock Classes="sectionhead" Text="运行状态" />
+              <TextBlock Classes="eyebrow" Text="STATUS" />
+            </StackPanel>
+            <TextBlock Grid.Column="2" Classes="dim" FontSize="11" VerticalAlignment="Center"
+                       Text="{Binding StatusText}" />
+          </Grid>
+
+          <Grid Grid.Row="1" ColumnDefinitions="*,*" Margin="0,10,0,0" RowDefinitions="Auto,Auto">
+            <Grid Grid.Row="0" Grid.Column="0" ColumnDefinitions="Auto,*" Margin="0,0,12,7">
+              <TextBlock Grid.Column="0" Classes="caption" Text="阶段" />
+              <TextBlock Grid.Column="1" Classes="mono" FontSize="11" HorizontalAlignment="Right"
+                         Text="{Binding Snapshot.PhaseText}" />
+            </Grid>
+            <Grid Grid.Row="0" Grid.Column="1" ColumnDefinitions="Auto,*" Margin="12,0,0,7">
+              <TextBlock Grid.Column="0" Classes="caption" Text="阶段进度" />
+              <TextBlock Grid.Column="1" Classes="mono" FontSize="11" HorizontalAlignment="Right"
+                         Text="{Binding Snapshot.Progress, StringFormat='{}{0:P0}'}" />
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="Auto,*" Margin="0,0,12,0">
+              <TextBlock Grid.Column="0" Classes="caption" Text="定位注入" />
+              <TextBlock Grid.Column="1" Classes="mono" FontSize="11" HorizontalAlignment="Right"
+                         Text="{Binding Snapshot.FixCount, StringFormat='{}{0} 次'}" />
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="Auto,*" Margin="12,0,0,0">
+              <TextBlock Grid.Column="0" Classes="caption" Text="剩余" />
+              <TextBlock Grid.Column="1" Classes="mono" FontSize="11" HorizontalAlignment="Right"
+                         Text="{Binding RemainingText}" />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Border>
+
+      <!-- 实时日志 -->
+      <Border Grid.Row="3" Classes="card" Margin="0,12,0,0">
+        <Grid RowDefinitions="Auto,*">
+          <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="18,13,18,4">
+            <Border Grid.Column="0" Classes="mark" Margin="0,0,9,0"
+                    Background="{StaticResource TextFaintBrush}" />
+            <TextBlock Grid.Column="1" Classes="sectionhead" Text="实时日志" />
+            <TextBlock Grid.Column="2" Classes="eyebrow" Text="LIVE" VerticalAlignment="Center"
+                       Foreground="{StaticResource AccentBrush}" />
+          </Grid>
+          <ScrollViewer Grid.Row="1" Margin="0,0,0,12">
+            <ItemsControl ItemsSource="{Binding LogLines}" Margin="18,4">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding}" Classes="mono" FontSize="11"
+                             Foreground="{StaticResource TextDimBrush}" TextWrapping="Wrap"
+                             Margin="0,1" />
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+        </Grid>
+      </Border>
+    </Grid>
+  </Grid>
+</UserControl>

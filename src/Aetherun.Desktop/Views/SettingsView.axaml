@@ -1,0 +1,169 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Aetherun.Desktop.ViewModels"
+             x:Class="Aetherun.Desktop.Views.SettingsView"
+             x:DataType="vm:MainViewModel">
+  <Grid RowDefinitions="Auto,*">
+
+    <!-- 页头 -->
+    <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="2,0,2,14">
+      <Border Grid.Column="0" Classes="mark" Margin="0,0,10,0" />
+      <StackPanel Grid.Column="1" Spacing="1">
+        <TextBlock Classes="title" Text="设置" />
+        <TextBlock Classes="eyebrow" Text="PATHS · CHANNELS · DEVICE" />
+      </StackPanel>
+      <Button Grid.Column="2" Classes="ghost" Content="重新检测" Height="34"
+              Padding="16,0" VerticalAlignment="Center" Command="{Binding RedetectCommand}" />
+    </Grid>
+
+    <ScrollViewer Grid.Row="1">
+      <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+
+        <!-- 模拟器路径 -->
+        <Border Grid.Row="0" Grid.Column="0" Classes="card" Padding="20,16" Margin="0,0,7,0">
+          <StackPanel Spacing="14">
+            <Grid ColumnDefinitions="Auto,*">
+              <Border Grid.Column="0" Classes="mark" Margin="0,0,9,0" />
+              <StackPanel Grid.Column="1" Spacing="1">
+                <TextBlock Classes="sectionhead" Text="雷电模拟器" />
+                <TextBlock Classes="eyebrow" Text="LDPLAYER PATHS" />
+              </StackPanel>
+            </Grid>
+
+            <StackPanel Spacing="10">
+              <StackPanel Spacing="4">
+                <TextBlock Classes="caption" Text="ldconsole.exe" />
+                <TextBox Text="{Binding LdConsolePathText, Mode=TwoWay}" FontSize="12"
+                         PlaceholderText="留空则自动探测 C/D/E/F 盘下的 LDPlayer14" />
+              </StackPanel>
+              <StackPanel Spacing="4">
+                <TextBlock Classes="caption" Text="adb.exe" />
+                <TextBox Text="{Binding AdbPathText, Mode=TwoWay}" FontSize="12"
+                         PlaceholderText="留空则自动探测模拟器目录或 PATH 里的 adb" />
+              </StackPanel>
+              <StackPanel Spacing="4">
+                <TextBlock Classes="caption" Text="模拟器序号（多开时 0 起）" />
+                <TextBox Text="{Binding EmulatorIndexText, Mode=TwoWay}" FontSize="12" PlaceholderText="0" />
+              </StackPanel>
+            </StackPanel>
+
+            <Border Classes="tile" Padding="12,9">
+              <TextBlock Classes="mono" FontSize="10" TextWrapping="Wrap"
+                         Foreground="{StaticResource TextFaintBrush}"
+                         Text="{Binding DetectedLdConsole}" />
+            </Border>
+          </StackPanel>
+        </Border>
+
+        <!-- 设备与倒计时 -->
+        <Border Grid.Row="0" Grid.Column="1" Classes="card" Padding="20,16" Margin="7,0,0,0">
+          <StackPanel Spacing="14">
+            <Grid ColumnDefinitions="Auto,*">
+              <Border Grid.Column="0" Classes="mark" Margin="0,0,9,0"
+                      Background="{StaticResource AccentAltBrush}" />
+              <StackPanel Grid.Column="1" Spacing="1">
+                <TextBlock Classes="sectionhead" Text="设备与倒计时" />
+                <TextBlock Classes="eyebrow" Text="ADB · TIMING" />
+              </StackPanel>
+            </Grid>
+
+            <StackPanel Spacing="10">
+              <StackPanel Spacing="4">
+                <TextBlock Classes="caption" Text="adb 序列号（雷电默认 127.0.0.1:5555）" />
+                <TextBox Text="{Binding AdbSerialText, Mode=TwoWay}" FontSize="12"
+                         PlaceholderText="127.0.0.1:5555" />
+              </StackPanel>
+              <StackPanel Spacing="4">
+                <TextBlock Classes="caption" Text="倒计时（秒）· 留出切到运动世界按开始的时间" />
+                <TextBox Text="{Binding LeadSecondsText, Mode=TwoWay}" FontSize="12" />
+              </StackPanel>
+              <StackPanel Spacing="4">
+                <TextBlock Classes="caption" Text="目标包名" />
+                <TextBox Text="{Binding PackageNameText, Mode=TwoWay}" FontSize="12"
+                         PlaceholderText="com.zjwh.android_wh_physicalfitness" />
+              </StackPanel>
+            </StackPanel>
+          </StackPanel>
+        </Border>
+
+        <!-- 注入通道 -->
+        <Border Grid.Row="1" Grid.Column="0" Classes="card" Padding="20,16" Margin="0,14,7,0">
+          <StackPanel Spacing="14">
+            <Grid ColumnDefinitions="Auto,*">
+              <Border Grid.Column="0" Classes="mark" Margin="0,0,9,0"
+                      Background="{StaticResource AccentWarmBrush}" />
+              <StackPanel Grid.Column="1" Spacing="1">
+                <TextBlock Classes="sectionhead" Text="注入通道" />
+                <TextBlock Classes="eyebrow" Text="GRAVITY · GEOLOCATION" />
+              </StackPanel>
+            </Grid>
+
+            <TextBlock Classes="caption" TextWrapping="Wrap" Text="{Binding ChannelNote}" />
+
+            <Grid ColumnDefinitions="*,*">
+              <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,7,0">
+                <TextBlock Classes="caption" Text="重力低点" />
+                <TextBox Text="{Binding GravityLowText, Mode=TwoWay}" FontSize="12" />
+              </StackPanel>
+              <StackPanel Grid.Column="1" Spacing="4" Margin="7,0,0,0">
+                <TextBlock Classes="caption" Text="重力高点" />
+                <TextBox Text="{Binding GravityHighText, Mode=TwoWay}" FontSize="12" />
+              </StackPanel>
+            </Grid>
+
+            <Border Classes="tile" Padding="12,9">
+              <TextBlock Classes="mono" FontSize="10" TextWrapping="Wrap"
+                         Foreground="{StaticResource TextFaintBrush}"
+                         Text="5.5 / 14.0 是实测能稳定计步的一对；摆幅太小时运动会漏采，步频会算成 0。" />
+            </Border>
+
+            <StackPanel Spacing="2">
+              <CheckBox Content="定位注入" IsChecked="{Binding GeoEnabled, Mode=TwoWay}" />
+              <CheckBox Content="步频注入" IsChecked="{Binding StepEnabled, Mode=TwoWay}" />
+              <CheckBox Content="自动拉起并点击开始" IsChecked="{Binding AutoStartApp, Mode=TwoWay}" />
+              <CheckBox Content="倒计时检测运动世界是否在前台"
+                        IsChecked="{Binding CheckForeground, Mode=TwoWay}" />
+            </StackPanel>
+          </StackPanel>
+        </Border>
+
+        <!-- 有效时间说明 -->
+        <Border Grid.Row="1" Grid.Column="1" Classes="card" Padding="20,16" Margin="7,14,0,0">
+          <StackPanel Spacing="14">
+            <Grid ColumnDefinitions="Auto,*">
+              <Border Grid.Column="0" Classes="mark" Margin="0,0,9,0"
+                      Background="{StaticResource DangerBrush}" />
+              <StackPanel Grid.Column="1" Spacing="1">
+                <TextBlock Classes="sectionhead" Text="成绩有效时间" />
+                <TextBlock Classes="eyebrow" Text="SERVER SIDE" />
+              </StackPanel>
+            </Grid>
+
+            <Border Classes="tile" Padding="14,12">
+              <StackPanel Spacing="6">
+                <TextBlock Classes="mono" FontSize="22" FontWeight="Bold"
+                           Foreground="{StaticResource AccentBrush}" Text="06:00 — 22:00" />
+                <TextBlock Classes="caption" TextWrapping="Wrap"
+                           Text="服务端按自己的时钟判定，本地改时间、改时区都不影响。窗口外的跑步不会记入学校成绩。" />
+              </StackPanel>
+            </Border>
+
+            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="7">
+              <TextBlock Grid.Row="0" Grid.Column="0" Classes="caption" Text="当前时间" />
+              <TextBlock Grid.Row="0" Grid.Column="1" Classes="mono" FontSize="11"
+                         HorizontalAlignment="Right" Text="{Binding WindowNote}" />
+
+              <TextBlock Grid.Row="1" Grid.Column="0" Classes="caption" Text="目标距离上限" />
+              <TextBlock Grid.Row="1" Grid.Column="1" Classes="mono" FontSize="11"
+                         HorizontalAlignment="Right" Text="2.0 km / 次" />
+
+              <TextBlock Grid.Row="2" Grid.Column="0" Classes="caption" Text="步频有效范围" />
+              <TextBlock Grid.Row="2" Grid.Column="1" Classes="mono" FontSize="11"
+                         HorizontalAlignment="Right" Text="60 — 300 步/分" />
+            </Grid>
+          </StackPanel>
+        </Border>
+      </Grid>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

@@ -1,0 +1,387 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Styles.Resources>
+    <!-- ===== 色板：冷灰底 + 单一荧光绿强调，参考深蹲计数器的低饱和暗色系 ===== -->
+    <Color x:Key="BgDeep">#080A0E</Color>
+    <Color x:Key="BgPanel">#0E1218</Color>
+    <Color x:Key="BgCard">#141A22</Color>
+    <Color x:Key="BgRaise">#1A222C</Color>
+    <Color x:Key="BgInput">#0A0E14</Color>
+    <Color x:Key="LineSoft">#1A212B</Color>
+    <Color x:Key="LineHard">#263140</Color>
+    <Color x:Key="TextMain">#E9EFF7</Color>
+    <Color x:Key="TextDim">#8896A9</Color>
+    <Color x:Key="TextFaint">#5A6879</Color>
+    <Color x:Key="Accent">#4ADE80</Color>
+    <Color x:Key="AccentDeep">#22A559</Color>
+    <Color x:Key="AccentAlt">#38BDF8</Color>
+    <Color x:Key="AccentWarm">#E0C060</Color>
+    <Color x:Key="Warn">#FBBF24</Color>
+    <Color x:Key="Danger">#F87171</Color>
+
+    <SolidColorBrush x:Key="BgDeepBrush" Color="{StaticResource BgDeep}" />
+    <SolidColorBrush x:Key="BgPanelBrush" Color="{StaticResource BgPanel}" />
+    <SolidColorBrush x:Key="BgCardBrush" Color="{StaticResource BgCard}" />
+    <SolidColorBrush x:Key="BgRaiseBrush" Color="{StaticResource BgRaise}" />
+    <SolidColorBrush x:Key="BgInputBrush" Color="{StaticResource BgInput}" />
+    <SolidColorBrush x:Key="LineSoftBrush" Color="{StaticResource LineSoft}" />
+    <SolidColorBrush x:Key="LineHardBrush" Color="{StaticResource LineHard}" />
+    <SolidColorBrush x:Key="TextMainBrush" Color="{StaticResource TextMain}" />
+    <SolidColorBrush x:Key="TextDimBrush" Color="{StaticResource TextDim}" />
+    <SolidColorBrush x:Key="TextFaintBrush" Color="{StaticResource TextFaint}" />
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource Accent}" />
+    <SolidColorBrush x:Key="AccentDeepBrush" Color="{StaticResource AccentDeep}" />
+    <SolidColorBrush x:Key="AccentAltBrush" Color="{StaticResource AccentAlt}" />
+    <SolidColorBrush x:Key="AccentWarmBrush" Color="{StaticResource AccentWarm}" />
+    <SolidColorBrush x:Key="WarnBrush" Color="{StaticResource Warn}" />
+    <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource Danger}" />
+
+    <!-- ===== 渐变 ===== -->
+    <!-- 窗口底：左上偏青、右下偏绿的极淡辉光，避免纯平死黑 -->
+    <LinearGradientBrush x:Key="WindowBackdrop" StartPoint="0%,0%" EndPoint="100%,100%">
+      <GradientStop Color="#0A1016" Offset="0" />
+      <GradientStop Color="#080A0E" Offset="0.45" />
+      <GradientStop Color="#07100C" Offset="1" />
+    </LinearGradientBrush>
+
+    <!-- 侧栏：自上而下略暗 -->
+    <LinearGradientBrush x:Key="PanelBackdrop" StartPoint="0%,0%" EndPoint="0%,100%">
+      <GradientStop Color="#101620" Offset="0" />
+      <GradientStop Color="#0C1015" Offset="1" />
+    </LinearGradientBrush>
+
+    <!-- 卡片：顶部一条极细高光 -->
+    <LinearGradientBrush x:Key="CardBackdrop" StartPoint="0%,0%" EndPoint="0%,100%">
+      <GradientStop Color="#161D26" Offset="0" />
+      <GradientStop Color="#111720" Offset="1" />
+    </LinearGradientBrush>
+
+    <!-- 主按钮 -->
+    <LinearGradientBrush x:Key="AccentBackdrop" StartPoint="0%,0%" EndPoint="0%,100%">
+      <GradientStop Color="#5CEE95" Offset="0" />
+      <GradientStop Color="#35C86C" Offset="1" />
+    </LinearGradientBrush>
+
+    <!-- 大数字 -->
+    <LinearGradientBrush x:Key="NumberBackdrop" StartPoint="0%,0%" EndPoint="0%,100%">
+      <GradientStop Color="#FFFFFF" Offset="0" />
+      <GradientStop Color="#9FE8BE" Offset="1" />
+    </LinearGradientBrush>
+  </Styles.Resources>
+
+  <Style Selector="Window">
+    <Setter Property="Background" Value="{StaticResource WindowBackdrop}" />
+    <Setter Property="FontFamily" Value="Inter, Microsoft YaHei UI, Segoe UI" />
+    <Setter Property="FontSize" Value="13" />
+  </Style>
+
+  <!-- ===== 文字 ===== -->
+  <Style Selector="TextBlock">
+    <Setter Property="Foreground" Value="{StaticResource TextMainBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.dim">
+    <Setter Property="Foreground" Value="{StaticResource TextDimBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.faint">
+    <Setter Property="Foreground" Value="{StaticResource TextFaintBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.caption">
+    <Setter Property="FontSize" Value="10" />
+    <Setter Property="Foreground" Value="{StaticResource TextFaintBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.eyebrow">
+    <Setter Property="FontSize" Value="9" />
+    <Setter Property="LetterSpacing" Value="2.4" />
+    <Setter Property="Foreground" Value="{StaticResource TextFaintBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.mono">
+    <Setter Property="FontFamily" Value="Cascadia Mono, Consolas, monospace" />
+  </Style>
+
+  <!-- 页标题 -->
+  <Style Selector="TextBlock.title">
+    <Setter Property="FontSize" Value="18" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LetterSpacing" Value="0.2" />
+  </Style>
+
+  <Style Selector="TextBlock.sectionhead">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{StaticResource TextMainBrush}" />
+  </Style>
+
+  <!-- ===== 容器 ===== -->
+  <Style Selector="Border.card">
+    <Setter Property="Background" Value="{StaticResource CardBackdrop}" />
+    <Setter Property="BorderBrush" Value="{StaticResource LineSoftBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="16" />
+    <Setter Property="BoxShadow" Value="0 10 28 -18 #000000" />
+  </Style>
+
+  <Style Selector="Border.tile">
+    <Setter Property="Background" Value="{StaticResource BgCardBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource LineSoftBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="11" />
+  </Style>
+
+  <Style Selector="Border.pill">
+    <Setter Property="Background" Value="{StaticResource BgCardBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource LineSoftBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="999" />
+    <Setter Property="Padding" Value="12,5" />
+  </Style>
+
+  <!-- 强调用的细条（卡片左上角标记） -->
+  <Style Selector="Border.mark">
+    <Setter Property="Width" Value="3" />
+    <Setter Property="Height" Value="13" />
+    <Setter Property="CornerRadius" Value="2" />
+    <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <!-- ===== 输入 ===== -->
+  <Style Selector="TextBox">
+    <Setter Property="Background" Value="{StaticResource BgInputBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource LineHardBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="10" />
+    <Setter Property="Foreground" Value="{StaticResource TextMainBrush}" />
+    <Setter Property="CaretBrush" Value="{StaticResource AccentBrush}" />
+    <Setter Property="SelectionBrush" Value="#3359E08A" />
+    <Setter Property="Padding" Value="12,8" />
+    <Setter Property="FontFamily" Value="Cascadia Mono, Consolas, monospace" />
+    <Setter Property="MinHeight" Value="34" />
+  </Style>
+
+  <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+    <Setter Property="BorderBrush" Value="{StaticResource LineHardBrush}" />
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+
+  <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+    <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+
+  <!-- ===== 按钮 ===== -->
+  <Style Selector="Button">
+    <Setter Property="Background" Value="{StaticResource BgRaiseBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource LineHardBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="10" />
+    <Setter Property="Foreground" Value="{StaticResource TextMainBrush}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Padding" Value="16,10" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.13" />
+        <BrushTransition Property="BorderBrush" Duration="0:0:0.13" />
+      </Transitions>
+    </Setter>
+  </Style>
+
+  <Style Selector="Button:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="#202A36" />
+    <Setter Property="BorderBrush" Value="{StaticResource LineHardBrush}" />
+  </Style>
+
+  <Style Selector="Button:pressed /template/ ContentPresenter">
+    <Setter Property="Background" Value="#18212B" />
+  </Style>
+
+  <Style Selector="Button.primary">
+    <Setter Property="Background" Value="{StaticResource AccentBackdrop}" />
+    <Setter Property="BorderBrush" Value="#5FE99A" />
+    <Setter Property="Foreground" Value="#04150C" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="LetterSpacing" Value="0.4" />
+  </Style>
+
+  <Style Selector="Button.primary:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="#6DF2A2" />
+    <Setter Property="BorderBrush" Value="#8DF8B8" />
+  </Style>
+
+  <Style Selector="Button.primary:pressed /template/ ContentPresenter">
+    <Setter Property="Background" Value="#33C069" />
+  </Style>
+
+  <Style Selector="Button.primary:disabled /template/ ContentPresenter">
+    <Setter Property="Background" Value="#1B2A22" />
+    <Setter Property="BorderBrush" Value="#24382C" />
+  </Style>
+
+  <Style Selector="Button.danger">
+    <Setter Property="Background" Value="#1C1216" />
+    <Setter Property="BorderBrush" Value="#3E2028" />
+    <Setter Property="Foreground" Value="#F4A8A8" />
+  </Style>
+
+  <Style Selector="Button.danger:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="#26161B" />
+    <Setter Property="BorderBrush" Value="#55272F" />
+  </Style>
+
+  <Style Selector="Button.ghost">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="Foreground" Value="{StaticResource TextDimBrush}" />
+    <Setter Property="FontWeight" Value="Normal" />
+  </Style>
+
+  <Style Selector="Button.ghost:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="#161E28" />
+    <Setter Property="BorderBrush" Value="{StaticResource LineSoftBrush}" />
+  </Style>
+
+  <!-- 预设芯片 -->
+  <Style Selector="Button.chip">
+    <Setter Property="Background" Value="#12181F" />
+    <Setter Property="BorderBrush" Value="{StaticResource LineHardBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource TextDimBrush}" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="Padding" Value="12,5" />
+    <Setter Property="CornerRadius" Value="999" />
+  </Style>
+
+  <Style Selector="Button.chip:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="#18222C" />
+    <Setter Property="BorderBrush" Value="#3A4A5C" />
+  </Style>
+
+  <!-- ===== 侧栏导航 ===== -->
+  <Style Selector="Button.nav">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="Padding" Value="12,10" />
+    <Setter Property="CornerRadius" Value="11" />
+    <Setter Property="FontWeight" Value="Normal" />
+  </Style>
+
+  <Style Selector="Button.nav:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="#141C26" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+  </Style>
+
+  <Style Selector="Button.nav.active">
+    <Setter Property="Background" Value="#16211C" />
+    <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+
+  <Style Selector="Button.nav.active /template/ ContentPresenter">
+    <Setter Property="Background" Value="#16211C" />
+    <Setter Property="BorderBrush" Value="#1F3A2A" />
+  </Style>
+
+  <!-- 选中项左侧的绿色竖条：原来只有背景变色，扫一眼分不出哪个是当前页 -->
+  <Style Selector="Button.nav.active Border.navbar">
+    <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+  </Style>
+
+  <Style Selector="Border.navbar">
+    <Setter Property="Width" Value="2" />
+    <Setter Property="Height" Value="16" />
+    <Setter Property="CornerRadius" Value="2" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="Margin" Value="0,0,8,0" />
+  </Style>
+
+  <!-- 选中项的文字与图标跟着变绿 -->
+  <Style Selector="Button.nav.active TextBlock.navtitle">
+    <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+  </Style>
+
+  <Style Selector="Button.nav.active TextBlock.navglyph">
+    <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+  </Style>
+
+  <!-- 卡片/磁贴悬停：给一点点反馈，不然整屏都是死板的面板 -->
+  <Style Selector="Border.tile:pointerover">
+    <Setter Property="BorderBrush" Value="{StaticResource LineHardBrush}" />
+  </Style>
+
+  <!-- ===== 开关 ===== -->
+  <Style Selector="ToggleSwitch">
+    <Setter Property="Foreground" Value="{StaticResource TextDimBrush}" />
+    <Setter Property="OnContent" Value="" />
+    <Setter Property="OffContent" Value="" />
+  </Style>
+
+  <Style Selector="CheckBox">
+    <Setter Property="Foreground" Value="{StaticResource TextDimBrush}" />
+    <Setter Property="FontSize" Value="11" />
+  </Style>
+
+  <Style Selector="ScrollViewer">
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+
+  <!-- 细滚动条 -->
+  <Style Selector="ScrollBar:vertical">
+    <Setter Property="Width" Value="8" />
+  </Style>
+
+  <Style Selector="ScrollBar:horizontal">
+    <Setter Property="Height" Value="8" />
+  </Style>
+
+  <!-- ===== 进度条 ===== -->
+  <Style Selector="ProgressBar">
+    <Setter Property="Background" Value="{StaticResource LineSoftBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+    <Setter Property="MinHeight" Value="3" />
+    <Setter Property="CornerRadius" Value="2" />
+  </Style>
+
+  <!-- ===== 滑块 ===== -->
+  <Style Selector="Slider">
+    <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+  </Style>
+
+  <Style Selector="Slider /template/ Thumb">
+    <Setter Property="Width" Value="14" />
+    <Setter Property="Height" Value="14" />
+  </Style>
+
+  <!-- 滑块轨道压细一点，别抢画面 -->
+  <Style Selector="Slider:horizontal /template/ Border#TrackBackground">
+    <Setter Property="Height" Value="3" />
+    <Setter Property="CornerRadius" Value="2" />
+    <Setter Property="Background" Value="{StaticResource LineSoftBrush}" />
+  </Style>
+
+  <!-- ===== 状态输入框：非法值给红边 ===== -->
+  <Style Selector="TextBox.invalid">
+    <Setter Property="BorderBrush" Value="{StaticResource DangerBrush}" />
+  </Style>
+
+  <!-- ComboBox 圆角对齐 -->
+  <Style Selector="ComboBox">
+    <Setter Property="Background" Value="{StaticResource BgInputBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource LineHardBrush}" />
+    <Setter Property="CornerRadius" Value="10" />
+    <Setter Property="MinHeight" Value="34" />
+    <Setter Property="Padding" Value="10,4" />
+  </Style>
+
+</Styles>

@@ -1,0 +1,300 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Aetherun.Desktop.ViewModels"
+             x:Class="Aetherun.Desktop.Views.AboutView"
+             x:DataType="vm:MainViewModel">
+
+  <ScrollViewer>
+    <StackPanel Margin="0,0,6,20" Spacing="14">
+
+      <!-- ===== HERO ===== -->
+      <Border Classes="card" Padding="0" ClipToBounds="True">
+        <Grid RowDefinitions="Auto,Auto">
+          <Grid.Background>
+            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+              <GradientStop Color="#14231C" Offset="0" />
+              <GradientStop Color="#101720" Offset="0.55" />
+              <GradientStop Color="#0C1118" Offset="1" />
+            </LinearGradientBrush>
+          </Grid.Background>
+
+          <!-- 氛围光 -->
+          <Ellipse Grid.RowSpan="2" Width="420" Height="420" HorizontalAlignment="Left"
+                   VerticalAlignment="Top" Margin="-140,-200,0,0">
+            <Ellipse.Fill>
+              <RadialGradientBrush>
+                <GradientStop Color="#2A4ADE80" Offset="0" />
+                <GradientStop Color="#004ADE80" Offset="1" />
+              </RadialGradientBrush>
+            </Ellipse.Fill>
+          </Ellipse>
+
+          <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="26,24,26,16">
+            <Border Grid.Column="0" Width="78" Height="78" CornerRadius="19"
+                    Background="#080B10" BorderBrush="{StaticResource LineHardBrush}"
+                    BorderThickness="1" ClipToBounds="True"
+                    BoxShadow="0 12 30 -14 #000000">
+              <Image Source="avares://Aetherun/Assets/icon/app-icon.png"
+                     Stretch="UniformToFill" />
+            </Border>
+
+            <StackPanel Grid.Column="1" Margin="20,0,0,0" VerticalAlignment="Center" Spacing="6">
+              <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock FontSize="27" FontWeight="Bold" LetterSpacing="0.4">
+                  <Run Text="Y·" Foreground="{StaticResource AccentBrush}" /><Run Text="Aetherun" />
+                </TextBlock>
+                <Border Classes="pill" Padding="10,4" VerticalAlignment="Center">
+                  <TextBlock Text="{Binding VersionText}" Classes="mono" FontSize="10"
+                             Foreground="{StaticResource AccentAltBrush}" />
+                </Border>
+              </StackPanel>
+              <TextBlock Classes="dim" FontSize="12"
+                         Text="书斋试剑，模拟器内绘莞工轨迹；守心有度，仅供研习，不劝越界。" />
+              <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,2,0,0">
+                <Border Classes="pill" Padding="10,3">
+                  <TextBlock Classes="mono" FontSize="9" Text="Avalonia 12"
+                             Foreground="{StaticResource TextDimBrush}" />
+                </Border>
+                <Border Classes="pill" Padding="10,3">
+                  <TextBlock Classes="mono" FontSize="9" Text=".NET 8"
+                             Foreground="{StaticResource TextDimBrush}" />
+                </Border>
+                <Border Classes="pill" Padding="10,3">
+                  <TextBlock Classes="mono" FontSize="9" Text="MIT"
+                             Foreground="{StaticResource TextDimBrush}" />
+                </Border>
+              </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Spacing="8" VerticalAlignment="Center">
+              <Button Classes="ghost" FontSize="11" Padding="14,7" Command="{Binding GoSplashCommand}">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                  <TextBlock Text="▶" FontSize="9" VerticalAlignment="Center"
+                             Foreground="{StaticResource AccentBrush}" />
+                  <TextBlock Text="看开屏动画" FontSize="11" VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+              <TextBlock Classes="faint" FontSize="10" HorizontalAlignment="Right" Text="作者 Y" />
+            </StackPanel>
+          </Grid>
+
+          <Border Grid.Row="1" Height="1" Background="#1B2430" />
+          <Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="0,13,0,15">
+            <StackPanel Grid.Column="0" Spacing="2" HorizontalAlignment="Center">
+              <TextBlock Classes="mono" FontSize="13" FontWeight="Bold"
+                         Foreground="{StaticResource AccentBrush}" Text="GPS HAL" />
+              <TextBlock Classes="caption" Text="定位通道" HorizontalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Spacing="2" HorizontalAlignment="Center">
+              <TextBlock Classes="mono" FontSize="13" FontWeight="Bold"
+                         Foreground="{StaticResource AccentAltBrush}" Text="call.gravity" />
+              <TextBlock Classes="caption" Text="步频通道" HorizontalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Grid.Column="2" Spacing="2" HorizontalAlignment="Center">
+              <TextBlock Classes="mono" FontSize="13" FontWeight="Bold"
+                         Foreground="{StaticResource AccentWarmBrush}" Text="12 点闭合" />
+              <TextBlock Classes="caption" Text="跑道模型" HorizontalAlignment="Center" />
+            </StackPanel>
+          </Grid>
+        </Grid>
+      </Border>
+
+      <!-- ===== 声明 ===== -->
+      <Border Classes="card">
+        <StackPanel Margin="22,18" Spacing="13">
+          <Grid ColumnDefinitions="Auto,*">
+            <Border Grid.Column="0" Classes="mark" Margin="0,0,9,0" />
+            <StackPanel Grid.Column="1" Spacing="1">
+              <TextBlock Classes="sectionhead" Text="项目声明" />
+              <TextBlock Classes="eyebrow" Text="DISCLAIMER" />
+            </StackPanel>
+          </Grid>
+
+          <TextBlock Classes="dim" FontSize="12" TextWrapping="Wrap" LineHeight="21"
+                     Text="此仓不过少年闲来磨剑，于模拟器一方小天地，绘莞工操场，写一段轨迹。" />
+
+          <TextBlock Classes="dim" FontSize="12" TextWrapping="Wrap" LineHeight="21"
+                     Text="一纸代码，如同木剑符箓，只作研习观想，非是教人投机取巧，亦不曾与校方、平台有半点勾连。世间自有章法，如同登山有阶、渡河有渡，有些边界，不可轻越。" />
+
+          <TextBlock Classes="dim" FontSize="12" TextWrapping="Wrap" LineHeight="21"
+                     Text="书里道理万千，行路却在自家心上。若取此代码把玩，当知何为敬畏，何为分寸。若是借此逾矩，便是自己在心头记上一笔账，是非祸福，皆由执剑人自行担承。" />
+
+          <TextBlock Classes="dim" FontSize="12" TextWrapping="Wrap" LineHeight="21"
+                     Text="作者只写下这卷闲稿，不担保无错漏，亦不为旁人的抉择背责。可取之处，欢迎同好切磋论道；若是不合世道，便束之高阁，一笑置之。" />
+        </StackPanel>
+      </Border>
+
+      <!-- ===== 签名 ===== -->
+      <Border Classes="card">
+        <StackPanel Margin="22,18" Spacing="14">
+          <Grid ColumnDefinitions="Auto,*">
+            <Border Grid.Column="0" Classes="mark" Margin="0,0,9,0"
+                    Background="{StaticResource AccentWarmBrush}" />
+            <StackPanel Grid.Column="1" Spacing="1">
+              <TextBlock Classes="sectionhead" Text="开发者的话" />
+              <TextBlock Classes="eyebrow" Text="SIGNATURE" />
+            </StackPanel>
+          </Grid>
+
+          <Border Background="#0A0F15" BorderBrush="{StaticResource LineSoftBrush}"
+                  BorderThickness="1" CornerRadius="14" Padding="20,18">
+            <Grid ColumnDefinitions="3,*">
+              <Border Grid.Column="0" Width="3" CornerRadius="2" Margin="0,2,0,2"
+                      Background="{StaticResource AccentBackdrop}" />
+              <StackPanel Grid.Column="1" Margin="16,0,0,0" Spacing="13">
+                <TextBlock FontSize="15" LineHeight="27" TextWrapping="Wrap"
+                           Foreground="{StaticResource TextMainBrush}"
+                           Text="天道崩塌，此洞天是莞工操场；" />
+                <TextBlock FontSize="15" LineHeight="27" TextWrapping="Wrap"
+                           Foreground="{StaticResource TextMainBrush}"
+                           Text="六十公里天道磨难，我奶蛙一人担之！" />
+                <TextBlock FontSize="13" LineHeight="24" TextWrapping="Wrap"
+                           Foreground="{StaticResource TextDimBrush}"
+                           Text="人心当有一杆秤，知可为，知不可为。愿诸君试剑而不堕本心，守好自家那盏灯火。" />
+
+                <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,2,0,0"
+                            HorizontalAlignment="Right">
+                  <Border Width="34" Height="1" Background="{StaticResource LineHardBrush}"
+                          VerticalAlignment="Center" />
+                  <TextBlock Text="Y" FontSize="13" FontWeight="SemiBold"
+                             Foreground="{StaticResource AccentBrush}" />
+                </StackPanel>
+              </StackPanel>
+            </Grid>
+          </Border>
+
+        </StackPanel>
+      </Border>
+
+      <!-- ===== 独立免责段落 ===== -->
+      <Border Classes="card" BorderBrush="{StaticResource DangerBrush}" BorderThickness="1">
+        <StackPanel Margin="22,18" Spacing="12">
+          <Grid ColumnDefinitions="Auto,*">
+            <Border Grid.Column="0" Classes="mark" Margin="0,0,9,0"
+                    Background="{StaticResource DangerBrush}" />
+            <StackPanel Grid.Column="1" Spacing="1">
+              <TextBlock Classes="sectionhead" Text="有言在先" />
+              <TextBlock Classes="eyebrow" Text="ONUS OF THE WIELDER" />
+            </StackPanel>
+          </Grid>
+
+          <TextBlock Classes="dim" FontSize="12" TextWrapping="Wrap" LineHeight="22"
+                     Text="有言在先：这只是书斋里的一次试笔，代码难免有疏漏瑕疵。编译、运行、二次改动之后生出的一切事端，账号风险、数据问题或是别的风波，都该由持剑行路之人自行承担。莫要将行路的代价，尽数推给写稿之人。" />
+
+          <Border Height="1" Background="{StaticResource LineSoftBrush}" />
+
+          <TextBlock Classes="dim" FontSize="12" TextWrapping="Wrap" LineHeight="22"
+                     Text="学技当存正道之心，可以琢磨手艺，不可借这手艺去踏破世间既有规矩。" />
+        </StackPanel>
+      </Border>
+
+      <!-- ===== 用法 ===== -->
+      <Border Classes="card">
+        <StackPanel Margin="22,18" Spacing="12">
+          <Grid ColumnDefinitions="Auto,*">
+            <Border Grid.Column="0" Classes="mark" Margin="0,0,9,0"
+                    Background="{StaticResource AccentAltBrush}" />
+            <StackPanel Grid.Column="1" Spacing="1">
+              <TextBlock Classes="sectionhead" Text="怎么用" />
+              <TextBlock Classes="eyebrow" Text="QUICK START" />
+            </StackPanel>
+          </Grid>
+
+          <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="13"
+                Margin="0,2,0,0">
+            <Border Grid.Row="0" Grid.Column="0" Classes="pill" Width="26" Height="26"
+                    Padding="0" Margin="0,0,13,0" VerticalAlignment="Top">
+              <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center"
+                         VerticalAlignment="Center" Text="01"
+                         Foreground="{StaticResource AccentBrush}" />
+            </Border>
+            <TextBlock Grid.Row="0" Grid.Column="1" Classes="dim" FontSize="12"
+                       TextWrapping="Wrap" LineHeight="19"
+                       Text="雷电模拟器打开 ROOT（右上角齿轮 → 其他设置 → ROOT 权限），启动一个 Android 14 实例。" />
+
+            <Border Grid.Row="1" Grid.Column="0" Classes="pill" Width="26" Height="26"
+                    Padding="0" Margin="0,0,13,0" VerticalAlignment="Top">
+              <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center"
+                         VerticalAlignment="Center" Text="02"
+                         Foreground="{StaticResource AccentBrush}" />
+            </Border>
+            <TextBlock Grid.Row="1" Grid.Column="1" Classes="dim" FontSize="12"
+                       TextWrapping="Wrap" LineHeight="19"
+                       Text="在「设置」页确认 ldconsole.exe 与 adb.exe 路径，点「重新检测」看到实例号即可。" />
+
+            <Border Grid.Row="2" Grid.Column="0" Classes="pill" Width="26" Height="26"
+                    Padding="0" Margin="0,0,13,0" VerticalAlignment="Top">
+              <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center"
+                         VerticalAlignment="Center" Text="03"
+                         Foreground="{StaticResource AccentBrush}" />
+            </Border>
+            <TextBlock Grid.Row="2" Grid.Column="1" Classes="dim" FontSize="12"
+                       TextWrapping="Wrap" LineHeight="19"
+                       Text="回到「仪表盘」，用滑轮调目标公里（0.5–2.0）、配速（2′–10′/km）、步频（60–300），也可以直接点慢走（8′00″）/ 标准（6′00″）/ 快走（4′00″）。" />
+
+            <Border Grid.Row="3" Grid.Column="0" Classes="pill" Width="26" Height="26"
+                    Padding="0" Margin="0,0,13,0" VerticalAlignment="Top">
+              <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center"
+                         VerticalAlignment="Center" Text="04"
+                         Foreground="{StaticResource AccentBrush}" />
+            </Border>
+            <TextBlock Grid.Row="3" Grid.Column="1" Classes="dim" FontSize="12"
+                       TextWrapping="Wrap" LineHeight="19"
+                       Text="点「开始跑步」，15 秒倒计时内到运动世界按下开始；跑完在 App 里提交成绩。校园跑只在 06:00–22:00 计入成绩。" />
+
+            <Border Grid.Row="4" Grid.Column="0" Classes="pill" Width="26" Height="26"
+                    Padding="0" Margin="0,0,13,0" VerticalAlignment="Top">
+              <TextBlock Classes="mono" FontSize="10" HorizontalAlignment="Center"
+                         VerticalAlignment="Center" Text="05"
+                         Foreground="{StaticResource AccentBrush}" />
+            </Border>
+            <TextBlock Grid.Row="4" Grid.Column="1" Classes="dim" FontSize="12"
+                       TextWrapping="Wrap" LineHeight="19"
+                       Text="「跑道」页右侧是奶蛙建模预览：逐像素光栅化网格三角（不是贴图，放多大都不糊，而且是实心的、看不穿），静止摆在那里，左右拖动画面或滑块就能转视角；0° 正面、180° 背面。" />
+          </Grid>
+        </StackPanel>
+      </Border>
+
+      <!-- ===== 技术栈 ===== -->
+      <Border Classes="card">
+        <StackPanel Margin="22,18" Spacing="12">
+          <Grid ColumnDefinitions="Auto,*">
+            <Border Grid.Column="0" Classes="mark" Margin="0,0,9,0"
+                    Background="{StaticResource TextFaintBrush}" />
+            <StackPanel Grid.Column="1" Spacing="1">
+              <TextBlock Classes="sectionhead" Text="技术栈" />
+              <TextBlock Classes="eyebrow" Text="STACK" />
+            </StackPanel>
+          </Grid>
+
+          <Grid ColumnDefinitions="120,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="9">
+            <TextBlock Grid.Row="0" Grid.Column="0" Classes="caption" Text="界面" />
+            <TextBlock Grid.Row="0" Grid.Column="1" Classes="dim" FontSize="12"
+                       Text="Avalonia 12 · .NET 8 · MVVM Toolkit" />
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Classes="caption" Text="定位通道" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Classes="dim" FontSize="12"
+                       Text="ldconsole locate --LLI（GPS HAL，无 mock 标记）" />
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Classes="caption" Text="步频通道" />
+            <TextBlock Grid.Row="2" Grid.Column="1" Classes="dim" FontSize="12"
+                       Text="ldconsole action call.gravity（z 轴加速度）" />
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Classes="caption" Text="开屏动画" />
+            <TextBlock Grid.Row="3" Grid.Column="1" Classes="dim" FontSize="12"
+                       Text="381 帧 JPEG 序列 @ 24fps · winmm 音频" />
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Classes="caption" Text="奶蛙渲染" />
+            <TextBlock Grid.Row="4" Grid.Column="1" Classes="dim" FontSize="12"
+                       Text="NWM1 网格（最高 50855 顶点 / 103790 三角）· 逐像素 z-buffer 软光栅，实心不透，无 GPU 依赖" />
+
+            <TextBlock Grid.Row="5" Grid.Column="0" Classes="caption" Text="步频闭环" />
+            <TextBlock Grid.Row="5" Grid.Column="1" Classes="dim" FontSize="12"
+                       Text="读运动世界自报步数（logcat）→ 比例校正发送率，不再只发不看" />
+          </Grid>
+        </StackPanel>
+      </Border>
+
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

@@ -1,0 +1,221 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Aetherun.Desktop.ViewModels"
+        xmlns:views="using:Aetherun.Desktop.Views"
+        x:Class="Aetherun.Desktop.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Title="Y·Aetherun"
+        Width="1240" Height="800"
+        MinWidth="1060" MinHeight="700"
+        WindowStartupLocation="CenterScreen"
+        TransparencyLevelHint="None"
+        Icon="/app.ico">
+
+  <Grid x:Name="RootHost">
+
+  <Grid RowDefinitions="Auto,*">
+
+    <!-- ===== 顶栏 ===== -->
+    <Grid Grid.Row="0" Height="58" Background="{StaticResource PanelBackdrop}"
+          ColumnDefinitions="Auto,*,Auto">
+      <Border Grid.ColumnSpan="3" VerticalAlignment="Bottom" Height="1"
+              Background="{StaticResource LineSoftBrush}" />
+
+      <StackPanel Grid.Column="0" Margin="20,0,0,0" VerticalAlignment="Center"
+                  Orientation="Horizontal" Spacing="11">
+        <Border Width="32" Height="32" CornerRadius="9" ClipToBounds="True"
+                Background="#0A0D13" VerticalAlignment="Center"
+                BoxShadow="0 3 12 -4 #4ADE8055">
+          <Image Source="avares://Aetherun/Assets/icon/app-icon.png" Stretch="UniformToFill" />
+        </Border>
+        <StackPanel Spacing="1" VerticalAlignment="Center">
+          <TextBlock FontSize="16" FontWeight="Bold" LetterSpacing="0.3">
+            <Run Text="Y·" Foreground="{StaticResource AccentBrush}" /><Run Text="Aetherun" />
+          </TextBlock>
+          <TextBlock Classes="eyebrow" Text="LDPLAYER TRACK ENGINE · F5 开跑 / F6 停 / F7 自检" />
+        </StackPanel>
+      </StackPanel>
+
+      <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8"
+                  Margin="0,0,18,0" VerticalAlignment="Center">
+        <Button Classes="ghost" FontSize="11" Padding="12,6" Click="OnReplaySplash"
+                ToolTip.Tip="重新播放启动动画">
+          <StackPanel Orientation="Horizontal" Spacing="6">
+            <TextBlock Text="▶" FontSize="9" VerticalAlignment="Center"
+                       Foreground="{StaticResource AccentBrush}" />
+            <TextBlock Text="开屏" FontSize="11" VerticalAlignment="Center" />
+          </StackPanel>
+        </Button>
+        <Button Classes="ghost" FontSize="11" Padding="12,6" Click="OnOpenAbout"
+                ToolTip.Tip="开发者与开源声明" Content="关于" />
+
+        <Border Width="1" Height="20" Background="{StaticResource LineSoftBrush}" Margin="4,0" />
+
+        <!-- 状态胶囊：左边灯 + 阶段文字，右边跟着本轮里程；跑起来才有分隔线 -->
+        <Border Classes="pill" Padding="11,5">
+          <StackPanel Orientation="Horizontal" Spacing="7">
+            <Ellipse Width="6" Height="6" VerticalAlignment="Center"
+                     Fill="{Binding StatusBrush}" x:Name="StatusDot" />
+            <TextBlock Text="{Binding StatusText}" FontSize="11"
+                       Foreground="{StaticResource TextDimBrush}" VerticalAlignment="Center" />
+            <Border Width="1" Height="11" Background="{StaticResource LineSoftBrush}"
+                    VerticalAlignment="Center" IsVisible="{Binding IsRunning}" />
+            <TextBlock Text="{Binding Snapshot.DistanceText}" Classes="mono" FontSize="10"
+                       Foreground="{StaticResource AccentBrush}" VerticalAlignment="Center"
+                       IsVisible="{Binding IsRunning}" />
+          </StackPanel>
+        </Border>
+      </StackPanel>
+    </Grid>
+
+    <!-- ===== body ===== -->
+    <Grid Grid.Row="1" ColumnDefinitions="220,*">
+
+      <!-- 侧栏 -->
+      <Border Grid.Column="0" Background="{StaticResource PanelBackdrop}">
+        <Border BorderBrush="{StaticResource LineSoftBrush}" BorderThickness="0,0,1,0">
+          <Grid RowDefinitions="*,Auto">
+            <StackPanel Margin="12,18,12,0" Spacing="3">
+              <TextBlock Classes="eyebrow" Text="工作区" Margin="12,0,0,8" />
+
+              <ItemsControl ItemsSource="{Binding Pages}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:NavItem">
+                    <Button Classes="nav" Tag="{Binding}" Click="OnNavClick">
+                      <Grid ColumnDefinitions="Auto,22,*">
+                        <Border Grid.Column="0" Classes="navbar" />
+                        <TextBlock Grid.Column="1" Classes="navglyph" Text="{Binding Glyph}"
+                                   FontSize="13" VerticalAlignment="Center"
+                                   Foreground="{StaticResource TextFaintBrush}" />
+                        <StackPanel Grid.Column="2" Spacing="1" VerticalAlignment="Center">
+                          <TextBlock Classes="navtitle" Text="{Binding Title}" FontSize="13" />
+                          <TextBlock Classes="caption" Text="{Binding Subtitle}" FontSize="9" />
+                        </StackPanel>
+                      </Grid>
+                    </Button>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+
+              <Border Height="1" Background="{StaticResource LineSoftBrush}" Margin="10,14" />
+
+              <TextBlock Classes="eyebrow" Text="快捷" Margin="12,0,0,6" />
+              <Button Classes="ghost" Content="重新检测环境" FontSize="11"
+                      HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                      Padding="12,7" Command="{Binding RedetectCommand}" />
+              <Button Classes="ghost" Content="打开程序目录" FontSize="11"
+                      HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                      Padding="12,7" Command="{Binding OpenFolderCommand}" />
+            </StackPanel>
+
+            <!-- 底部版本 -->
+            <StackPanel Grid.Row="1" Margin="22,0,22,16" Spacing="4">
+              <Border Height="1" Background="{StaticResource LineSoftBrush}" Margin="0,0,0,12" />
+              <StackPanel Orientation="Horizontal" Spacing="6">
+                <TextBlock Classes="mono" FontSize="10" Text="{Binding VersionText}"
+                           Foreground="{StaticResource TextFaintBrush}" />
+                <TextBlock Classes="faint" FontSize="10" Text="· MIT" />
+              </StackPanel>
+              <TextBlock Classes="faint" FontSize="9" Text="作者 Y" />
+            </StackPanel>
+          </Grid>
+        </Border>
+      </Border>
+
+      <!-- 页面 -->
+      <Grid Grid.Column="1" Margin="20,18,20,0" RowDefinitions="*,Auto">
+
+        <Grid Grid.Row="0">
+          <views:DashboardView DataContext="{Binding}" IsVisible="{Binding IsDashboard}" />
+          <views:TrackView DataContext="{Binding}" IsVisible="{Binding IsTrack}" />
+          <views:SplashView DataContext="{Binding}" IsVisible="{Binding IsSplash}" />
+          <views:SettingsView DataContext="{Binding}" IsVisible="{Binding IsSettings}" />
+          <views:LogsView DataContext="{Binding}" IsVisible="{Binding IsLogs}" />
+          <views:AboutView DataContext="{Binding}" IsVisible="{Binding IsAbout}" />
+        </Grid>
+
+        <!-- 操作条 -->
+        <Border Grid.Row="1" Classes="card" Margin="0,14,0,16" Padding="0" ClipToBounds="True">
+          <Grid RowDefinitions="Auto,Auto">
+
+            <!-- 顶部一条细进度：不用切页也能看到跑到哪。
+                 原来用 900 * progress 算像素宽，窗口一拉伸就错位；改成真正的进度条。 -->
+            <ProgressBar Grid.Row="0" Height="3" Minimum="0" Maximum="1"
+                         Value="{Binding Snapshot.Progress}"
+                         Background="#101720"
+                         Foreground="{StaticResource AccentBackdrop}" />
+
+            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,Auto,*,Auto" Margin="16,13">
+              <!-- 左侧 3px 竖条：颜色 = 当前阶段，比读文字快 -->
+              <Border Grid.ColumnSpan="5" Width="3" HorizontalAlignment="Left"
+                      Margin="-16,-13,0,-13" CornerRadius="2"
+                      Background="{Binding PhaseAccent}" />
+              <!-- 主按钮：文字跟着阶段变（开始跑步 / 倒计时中… / 再跑一次） -->
+              <Button Grid.Column="0" Classes="primary" Width="212" Height="46"
+                      Command="{Binding StartCommand}" IsEnabled="{Binding !Busy}">
+                <StackPanel Orientation="Horizontal" Spacing="9">
+                  <TextBlock Text="▶" FontSize="11" VerticalAlignment="Center" />
+                  <TextBlock Text="{Binding StartLabel}" FontSize="13" FontWeight="SemiBold"
+                             VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+
+              <Button Grid.Column="1" Classes="danger" Width="106" Height="46" Margin="11,0,0,0"
+                      Content="停止" Command="{Binding StopCommand}" IsEnabled="{Binding Busy}" />
+
+              <Button Grid.Column="2" Classes="ghost" Height="46" Margin="11,0,0,0" Padding="16,0"
+                      Command="{Binding RedetectCommand}">
+                <StackPanel Orientation="Horizontal" Spacing="7">
+                  <TextBlock Text="⟳" FontSize="11" VerticalAlignment="Center"
+                             Foreground="{StaticResource AccentAltBrush}" />
+                  <TextBlock Text="环境自检" FontSize="12" VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+
+              <!-- 中间：这一趟的关键数字，跑起来才显示 -->
+              <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="22"
+                          Margin="26,0,0,0" VerticalAlignment="Center">
+                <StackPanel Spacing="1">
+                  <TextBlock Classes="eyebrow" Text="已完成" />
+                  <TextBlock Classes="mono" FontSize="15" FontWeight="Bold"
+                             Foreground="{StaticResource AccentBrush}"
+                             Text="{Binding Snapshot.DistanceText}" />
+                </StackPanel>
+                <StackPanel Spacing="1">
+                  <TextBlock Classes="eyebrow" Text="用时" />
+                  <TextBlock Classes="mono" FontSize="15"
+                             Text="{Binding Snapshot.ElapsedText}" />
+                </StackPanel>
+                <StackPanel Spacing="1">
+                  <TextBlock Classes="eyebrow" Text="平均步频" />
+                  <TextBlock Classes="mono" FontSize="15"
+                             Text="{Binding Snapshot.CadenceText}" />
+                </StackPanel>
+                <StackPanel Spacing="1">
+                  <TextBlock Classes="eyebrow" Text="剩余" />
+                  <TextBlock Classes="mono" FontSize="15"
+                             Foreground="{StaticResource AccentWarmBrush}"
+                             Text="{Binding RemainingText}" />
+                </StackPanel>
+              </StackPanel>
+
+              <StackPanel Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right"
+                          Spacing="3">
+                <TextBlock Classes="eyebrow" Text="下一步" HorizontalAlignment="Right" />
+                <TextBlock Classes="dim" FontSize="11" HorizontalAlignment="Right"
+                           Text="{Binding ActionHint}" />
+              </StackPanel>
+            </Grid>
+          </Grid>
+        </Border>
+      </Grid>
+    </Grid>
+
+  </Grid>
+
+  <!-- ===== 开屏层：与内容 Grid 平级、铺满整个 RootHost（含顶栏与侧栏）。
+       不能放进上面那个 RowDefinitions="Auto,*" 的 Grid 里 —— 那样只会占一行。 -->
+  <views:SplashOverlay x:Name="SplashLayer" />
+
+  </Grid>
+</Window>

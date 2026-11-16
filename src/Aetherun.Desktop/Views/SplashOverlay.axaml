@@ -1,0 +1,46 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Aetherun.Desktop.Controls"
+             x:Class="Aetherun.Desktop.Views.SplashOverlay">
+
+  <!-- 铺满整个主窗口：不再是 1000×750 的独立小窗。
+       背景不透明，盖住下面的顶栏、侧栏、操作条，播完淡出。 -->
+  <Grid x:Name="Root" Background="#05070A" ClipToBounds="True">
+
+    <controls:SplashPlayer x:Name="Player" Cinematic="True" />
+
+    <!-- 左上品牌 -->
+    <StackPanel Margin="38,32,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Spacing="5"
+                x:Name="Brand">
+      <TextBlock FontSize="22" FontWeight="Bold" LetterSpacing="0.6">
+        <Run Text="Y·" Foreground="{StaticResource AccentBrush}" /><Run Text="Aetherun" />
+      </TextBlock>
+      <TextBlock Text="LDPLAYER TRACK ENGINE" FontSize="9" LetterSpacing="3.4"
+                 Foreground="#7D8DA3" />
+    </StackPanel>
+
+    <!-- 中下标语：随进度淡入 -->
+    <StackPanel x:Name="Tagline" Margin="38,0,0,86" HorizontalAlignment="Left"
+                VerticalAlignment="Bottom" Spacing="8" Opacity="0">
+      <TextBlock Text="莞工操场 · 驭朔长驰" FontSize="30" FontWeight="Bold"
+                 Foreground="#F2F6FC" LetterSpacing="1.5" />
+      <TextBlock Text="书斋试剑，模拟器内绘莞工轨迹 · GPS HAL 定位 + 加速度步频"
+                 FontSize="12" Foreground="#8A99AE" />
+    </StackPanel>
+
+    <!-- 右下跳过 -->
+    <StackPanel Margin="0,0,38,80" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Orientation="Horizontal" Spacing="14">
+      <TextBlock Text="点击任意处或按任意键跳过" FontSize="10"
+                 Foreground="#5F6E85" VerticalAlignment="Center" />
+      <Button x:Name="SkipBtn" Classes="ghost" FontSize="11" Padding="18,7"
+              Content="跳过" Click="OnSkip" VerticalAlignment="Center" />
+    </StackPanel>
+
+    <!-- 底部进度 -->
+    <Border VerticalAlignment="Bottom" Height="3" Background="#12161C">
+      <Border x:Name="Bar" HorizontalAlignment="Left" Width="0"
+              Background="{StaticResource AccentBrush}" />
+    </Border>
+  </Grid>
+</UserControl>
