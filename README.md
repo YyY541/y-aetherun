@@ -1,7 +1,7 @@
 
-# y-aetherun
+# y-aetherun(莞工专用）
 DGUT校园跑轨迹与步频引擎(雷电模拟器) · Avalonia / .NET 8
-# Y·Aetherun
+# Y·Aetherun(DGUT)
 
 **雷电模拟器 · 校园跑轨迹与步频引擎**
 
